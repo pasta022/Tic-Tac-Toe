@@ -4,12 +4,17 @@ const gameELement = document.querySelector("#board");
 const announcer = document.querySelector(".winning-text");
 const announcer2 = document.querySelector(".announce-text");
 const winSpecifier = document.querySelector(".specifier");
-const restartButton = document.getElementById("reset");
+const newGameButton = document.getElementById("new");
+const resetButton = document.getElementById("reset");
 const announceHeader = document.querySelector(`.announce-header`);
 const headerSpecifier = document.querySelector(`.header-specifier`);
+const XScore = document.querySelector(`.X-score`);
+const OScore = document.querySelector(`.O-score`);
 
 let X_CLASS = "cross";
 let O_CLASS = "circle";
+let X_COUNT = 0,
+  O_COUNT = 0;
 let currentPlayer = X_CLASS;
 /* board index
     [0] [1] [2]
@@ -29,6 +34,7 @@ let winningConditions = [
 //Start Game
 startGame();
 
+// start game function
 function startGame() {
   announcer.classList.add("hide");
   boxElements.forEach((box) => {
@@ -40,6 +46,14 @@ function startGame() {
     box.innerHTML = "";
     box.addEventListener("click", click, { once: true });
   });
+}
+
+//reset score board
+function reset() {
+  X_COUNT = 0;
+  O_COUNT = 0;
+  XScore.innerHTML = X_COUNT;
+  OScore.innerHTML = O_COUNT;
 }
 
 //Click function
@@ -86,7 +100,6 @@ const checkWin = (currentPlayer) => {
   } else {
     currentPlayer = currentPlayer === X_CLASS ? O_CLASS : X_CLASS;
     playerTurn(currentPlayer);
-    console.log(currentPlayer);
   }
 };
 function gameWon(currentPlayer) {
@@ -101,9 +114,12 @@ function endgame(draw) {
     announcer2.innerHTML = "Draw!";
     announcer.classList.remove("hide");
   } else {
+    currentPlayer === X_CLASS ? X_COUNT++ : O_COUNT++;
     currentPlayer === X_CLASS
       ? (announcer2.innerHTML = "Player X wins")
       : (announcer2.innerHTML = "Player O Wins");
+    XScore.innerHTML = X_COUNT;
+    OScore.innerHTML = O_COUNT;
     announcer.classList.remove("hide");
   }
 }
@@ -114,7 +130,10 @@ function isDraw() {
 }
 
 //New Game Button
-restartButton.addEventListener("click", startGame);
+newGameButton.addEventListener("click", startGame);
+
+// reset
+resetButton.addEventListener("click", reset);
 
 //reload function
 function reload() {
