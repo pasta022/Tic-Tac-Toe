@@ -9,11 +9,17 @@ html{
 body{
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center; 
     font-family: 'Bangers', cursive;
     color: black;
     margin: 0;  
+}
+
+.announce-header{
+    margin-bottom: 20px;
+    font-size: 24px;
 }
 
 .tictactoe-box{
